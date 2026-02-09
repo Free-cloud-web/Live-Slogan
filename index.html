@@ -18,11 +18,12 @@ body {
 #slogan {
   font-size: 5vw;
   font-weight: bold;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 #timer {
-  font-size: 3vw;
+  font-size: 6vw;
   color: yellow;
+  font-weight: bold;
 }
 </style>
 </head>
@@ -43,23 +44,25 @@ const slogans = [
   "Freedom For Iran",
   "ضجه بزن موشعلی، داره میاد پهلوی",
   "جاوید شاه",
-  "SOS For Iran"
+  "SOS For Iran",
+  " این آخرین نبرده، پهلوی برمی‌گرده",
+  "One Solution,   Revolution"
 ];
 
 let index = 0;               // current slogan
-const intervalSeconds = 60;  // seconds for each slogan
+const intervalSeconds = 60;  // seconds per slogan
 let remaining = intervalSeconds;
 
-// Function to update slogan and timer
+// Function to update slogan and timer display
 function updateDisplay() {
   document.getElementById("slogan").innerText = slogans[index];
-  document.getElementById("timer").innerText = `Next slogan in: ${remaining}s`;
+  document.getElementById("timer").innerText = remaining;
 }
 
 // Countdown logic
 function countdown() {
   remaining--;
-  if (remaining <= 0) {
+  if (remaining < 0) {
     // Move to next slogan
     index = (index + 1) % slogans.length;
     remaining = intervalSeconds;
@@ -70,7 +73,7 @@ function countdown() {
 // Initial display
 updateDisplay();
 
-// Update every 1 second
+// Update every second
 setInterval(countdown, 1000);
 </script>
 
