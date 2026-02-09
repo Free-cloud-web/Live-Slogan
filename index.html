@@ -18,12 +18,11 @@ body {
 #slogan {
   font-size: 5vw;
   font-weight: bold;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 #timer {
-  font-size: 6vw;
+  font-size: 3vw;
   color: yellow;
-  font-weight: bold;
 }
 </style>
 </head>
@@ -49,32 +48,22 @@ const slogans = [
   "One Solution,   Revolution"
 ];
 
-let index = 0;               // current slogan
-const intervalSeconds = 60;  // seconds per slogan
-let remaining = intervalSeconds;
+const intervalSeconds = 60; // seconds per slogan
 
-// Function to update slogan and timer display
 function updateDisplay() {
-  document.getElementById("slogan").innerText = slogans[index];
-  document.getElementById("timer").innerText = remaining;
-}
+  const now = new Date();
+  const totalSeconds = Math.floor(now.getTime() / 1000); // seconds since epoch
+  const currentIndex = Math.floor(totalSeconds / intervalSeconds) % slogans.length;
+  const secondsIntoInterval = totalSeconds % intervalSeconds;
+  const remaining = intervalSeconds - secondsIntoInterval;
 
-// Countdown logic
-function countdown() {
-  remaining--;
-  if (remaining < 0) {
-    // Move to next slogan
-    index = (index + 1) % slogans.length;
-    remaining = intervalSeconds;
-  }
-  updateDisplay();
+  document.getElementById("slogan").innerText = slogans[currentIndex];
+  document.getElementById("timer").innerText = `Next slogan in: ${remaining}s`;
 }
-
-// Initial display
-updateDisplay();
 
 // Update every second
-setInterval(countdown, 1000);
+updateDisplay();
+setInterval(updateDisplay, 1000);
 </script>
 
 </body>
