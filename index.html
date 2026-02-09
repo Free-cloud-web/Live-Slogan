@@ -10,6 +10,7 @@ body {
   background: black;
   color: white;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100vh;
@@ -17,14 +18,21 @@ body {
 #slogan {
   font-size: 5vw;
   font-weight: bold;
+  margin-bottom: 20px;
+}
+#timer {
+  font-size: 3vw;
+  color: yellow;
 }
 </style>
 </head>
 <body>
 
 <div id="slogan"></div>
+<div id="timer"></div>
 
 <script>
+// ⚡ Your slogans here
 const slogans = [
   "مرگ بر خامنه ای",
   "جاوید شاه",
@@ -38,15 +46,34 @@ const slogans = [
   "SOS For Iran"
 ];
 
-function updateSlogan() {
-  const minute = Math.floor(Date.now() / 60000);
-  const index = minute % slogans.length;
+let index = 0;               // current slogan
+const intervalSeconds = 60;  // seconds for each slogan
+let remaining = intervalSeconds;
+
+// Function to update slogan and timer
+function updateDisplay() {
   document.getElementById("slogan").innerText = slogans[index];
+  document.getElementById("timer").innerText = `Next slogan in: ${remaining}s`;
 }
 
-updateSlogan();
-setInterval(updateSlogan, 1000);
+// Countdown logic
+function countdown() {
+  remaining--;
+  if (remaining <= 0) {
+    // Move to next slogan
+    index = (index + 1) % slogans.length;
+    remaining = intervalSeconds;
+  }
+  updateDisplay();
+}
+
+// Initial display
+updateDisplay();
+
+// Update every 1 second
+setInterval(countdown, 1000);
 </script>
 
 </body>
 </html>
+
